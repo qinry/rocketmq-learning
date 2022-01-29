@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RocketMQ name="rocketmqAppender" producerGroup="logGroup" nameServerAddress="10.119.6.210:9876"
+                  topic="logTopic" tag="log4j2Tag">
+            <PatternLayout pattern="%date %p %t - %m%n"/>
+        </RocketMQ>
+        <Async name="mqAsyncAppender1">
+            <AppenderRef ref="rocketmqAppender"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="mqAsyncAppender1" />
+        </Root>
+    </Loggers>
+</Configuration>
